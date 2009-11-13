@@ -1,0 +1,5 @@
+=== St. Elsewhere
+
+An ActiveRecord association proxy to support relationships across different databases
+
+http://emphaticsolutions.com/images/st.elsewhere.jpg
