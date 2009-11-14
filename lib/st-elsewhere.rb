@@ -105,3 +105,5 @@ module StElsewhere
   private :collection_accessor_methods_elsewhere
 
 end
+
+ActiveRecord::Base.extend StElsewhere
