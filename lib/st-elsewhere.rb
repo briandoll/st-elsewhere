@@ -48,6 +48,8 @@ module StElsewhere
       end
     end
 
+    private "remove_#{association_id.to_s.singularize}_associations".to_sym, "add_#{association_id.to_s.singularize}_associations".to_sym
+
   end
 
 end
