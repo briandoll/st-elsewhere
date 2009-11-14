@@ -1,6 +1,6 @@
 === St. Elsewhere
 
-An ActiveRecord association proxy to support relationships across different databases
+An ActiveRecord plugin to support relationships across different databases
 
 http://emphaticsolutions.com/images/st.elsewhere.jpg
 
@@ -43,3 +43,5 @@ Example:
     has_many :hospitals, :through => :hospital_doctors
   end
 
+  The following conventional methods are available for Hospital:
+  hospital.doctors, hospital.doctors=, hospital.doctor_ids, hospital.doctor_ids=
