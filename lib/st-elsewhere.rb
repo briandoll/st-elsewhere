@@ -8,7 +8,7 @@ module StElsewhere
   def collection_accessor_methods_elsewhere(association_id, association_class, through)
 
     define_method("#{association_id.to_s.singularize}_ids") do
-      self.send("#{through.to_s.singularize}_ids")
+      self.send("#{association_id.to_s}").map{|a| a.id}
     end
 
     define_method("#{association_id.to_s}") do
