@@ -45,3 +45,7 @@ Example:
 
   The following conventional methods are available for Hospital:
   hospital.doctors, hospital.doctors=, hospital.doctor_ids, hospital.doctor_ids=
+
+=== Inefficiencies
+
+<tt>has_many_elsewhere</tt> is certainly much less efficient than a comparable has_many relationship.  <tt>has_many :through</tt> relationships use SQL JOINs which while efficient, do not work across multiple database connections.  St. Elsewhere implements much of the same resulting API methods in code, using less efficient SQL.
