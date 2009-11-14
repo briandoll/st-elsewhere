@@ -18,7 +18,7 @@ You'll encounter one of two errors, depending on your setup:
 
 === The Solution
 
-St. Elsewhere is an ActiveRecord plugin that adds a new class method (<tt>has_many_elsewhere</tt>) to support basic association methods across different database connections.
+St. Elsewhere adds a new class method (<tt>has_many_elsewhere</tt>) to support basic association methods across different database connections for ActiveRecord models.
 
 Example:
 
