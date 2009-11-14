@@ -6,12 +6,11 @@ http://emphaticsolutions.com/images/st.elsewhere.jpg
 
 === The Scenario
 
-For a variety of reasons, you might find yourself supporting multiple databases in your Rails application.  Maybe you're connecting to a legacy database for a few models.  Perhaps you have divided your Rails application in two, one database for your online catalog system and another for transactional data.  Multiple database connections in Rails is {nothing new.}[http://www.google.com/search?hl=en&source=hp&q=multiple+database+connections+rails&aq=f&oq=&aqi=g4]
+For a variety of reasons, you might find yourself supporting multiple databases in your Rails application.  Maybe you're connecting to a legacy database for a few models.  Perhaps you have divided your Rails application into two parts, one database for your online catalog system and another for transactional data.  Multiple database connections in Rails is {nothing new.}[http://www.google.com/search?hl=en&source=hp&q=multiple+database+connections+rails&aq=f&oq=&aqi=g4]
 
 === The Problem
 
-While there may be great benefits to connecting to multiple databases in your app, there are also costs.  One specific case does not work.
-<b><tt>has_many :children, :through => parent_children</tt></b> does not work.
+While there may be great benefits to connecting to multiple databases in your app, there are also costs.  One example is that <b><tt>has_many :children, :through => parent_children</tt></b> does not work.
 
 You'll encounter one of two errors, depending on your setup:
 * If the schemas are different, you'll see something like: <tt>ActiveRecord::StatementInvalid: Mysql::Error: Table 'appname_transactional.parent_children' doesn't exist</tt>
@@ -19,7 +18,7 @@ You'll encounter one of two errors, depending on your setup:
 
 === The Solution
 
-St. Elsewhere is an ActiveRecord plugin that adds a new class method to support basic association methods across different database connections.
+St. Elsewhere is an ActiveRecord plugin that adds a new class method (<tt>has_many_elsewhere</tt>) to support basic association methods across different database connections.
 
 Example:
 

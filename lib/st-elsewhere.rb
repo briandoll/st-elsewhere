@@ -2,7 +2,7 @@ module StElsewhere
   
   # Specifies a one-to-many association across database connections.
   # This is currently an incomplete implementation and does not yet use all of the options supported by has_many
-  
+  #
   # The following methods for retrieval and query of collections of associated objects will be added:
   #
   # [collection<<(object, ...)]
@@ -66,13 +66,13 @@ module StElsewhere
 
     # Hospital#doctors=
     define_method("#{association_plural}=") do |new_associations|
-      association_class    = through.to_s.singularize.camelize.constantize
+      through_class        = through.to_s.singularize.camelize.constantize
       current_associations = self.send("#{through_association_singular}_ids")
       removed_associations = current_associations - new_associations
       new_associations     = new_associations - current_associations
       
       self.send("remove_#{association_singular}_associations", association_class, removed_associations)
-      self.send("add_#{association_singular}_associations", association_class, association_id, new_associations)
+      self.send("add_#{association_singular}_associations", through_class, association_id, new_associations)
     end
 
     # Hospital#doctor_ids=
