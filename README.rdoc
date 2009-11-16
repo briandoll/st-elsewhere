@@ -22,6 +22,8 @@ St. Elsewhere adds a new class method (<tt>has_many_elsewhere</tt>) to support b
 
 Example:
 
+http://emphaticsolutions.com/images/has_many_elsewhere.png
+
   class Hospital < AcitveRecord::Base
     has_many :hospital_doctors
     has_many_elsewhere :doctors, :through => :hospital_doctors
