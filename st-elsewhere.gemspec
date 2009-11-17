@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{st-elsewhere}
-  s.version = "0.1.0"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brian Doll"]
-  s.date = %q{2009-11-14}
+  s.date = %q{2009-11-16}
   s.description = %q{This gem provides has_many_elsewhere, an ActiveRecord class method to support many to many relationships in Rails applications, across multiple database connections.}
   s.email = %q{brian@emphaticsolutions.com}
   s.extra_rdoc_files = [
@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "lib/st-elsewhere.rb",
+     "st-elsewhere.gemspec",
      "tasks/st-elsewhere_tasks.rake",
      "test/st-elsewhere_test.rb",
      "test/test_helper.rb"
