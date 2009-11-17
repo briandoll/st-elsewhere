@@ -71,7 +71,7 @@ module StElsewhere
       removed_associations = current_associations - new_associations
       new_associations     = new_associations - current_associations
       
-      self.send("remove_#{association_singular}_associations", association_class, removed_associations)
+      self.send("remove_#{association_singular}_associations", through_class, removed_associations)
       self.send("add_#{association_singular}_associations", through_class, association_id, new_associations)
     end
 
@@ -89,8 +89,8 @@ module StElsewhere
 
     # Hospital#add_doctor_associations (private)
     define_method("add_#{association_singular}_associations") do |through_class, association_id, associations|
-      myself = "#{self.class.to_s.downcase}_id"
-      my_buddy = "#{association_singular}_id"
+      myself = self.class.to_s.foreign_key
+      my_buddy = association_singular.foreign_key
       associations.each do |association|
         my_buddy_id = Fixnum.eql?(association.class) ? association : association.id
         new_association = through_class.new(myself => self.id, my_buddy => my_buddy_id)
