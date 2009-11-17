@@ -67,7 +67,7 @@ module StElsewhere
     # Hospital#doctors=
     define_method("#{association_plural}=") do |new_associations|
       through_class        = through.to_s.singularize.camelize.constantize
-      current_associations = self.send("#{through_association_singular}_ids")
+      current_associations = self.send("#{association_plural}")
       removed_associations = current_associations - new_associations
       new_associations     = new_associations - current_associations
       
