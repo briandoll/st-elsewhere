@@ -50,6 +50,10 @@ module StElsewhere
     association_singular = association_id.to_s.singularize
     association_plural   = association_id.to_s
     through_association_singular = through.to_s.singularize
+    my_class       = self
+    my_foreign_key = self.to_s.foreign_key
+    target_association_class = association_singular.classify.constantize
+    target_association_foreign_key = association_singular.foreign_key
     
     # Hospital#doctor_ids
     define_method("#{association_singular}_ids") do
@@ -67,12 +71,14 @@ module StElsewhere
     # Hospital#doctors=
     define_method("#{association_plural}=") do |new_associations|
       through_class        = through.to_s.singularize.camelize.constantize
-      current_associations = self.send("#{association_plural}")
-      removed_associations = current_associations - new_associations
-      new_associations     = new_associations - current_associations
+      current_associations = self.send("#{association_singular}_ids")
+      desired_associations = self.class.associations_to_association_ids(new_associations)
       
-      self.send("remove_#{association_singular}_associations", through_class, removed_associations)
-      self.send("add_#{association_singular}_associations", through_class, association_id, new_associations)
+      removed_target_associations = current_associations - desired_associations
+      new_target_associations     = desired_associations - current_associations
+      
+      self.send("remove_#{association_singular}_associations", through_class, removed_target_associations)
+      self.send("add_#{association_singular}_associations", through_class, association_id, new_target_associations)
     end
 
     # Hospital#doctor_ids=
@@ -81,25 +87,40 @@ module StElsewhere
     end
 
     # Hospital#remove_doctor_associations (private)
-    define_method("remove_#{association_singular}_associations") do |association_class, associations|
-      associations.each do |association|
-        association_class.delete(association)
-      end
+    define_method("remove_#{association_singular}_associations") do |through_class, removed_target_associations|
+      association_instances_to_remove = 
+        through_class.send("find_all_by_#{my_foreign_key}_and_#{target_association_foreign_key}", self.id, removed_target_associations)
+      through_class.delete(association_instances_to_remove)
     end
 
     # Hospital#add_doctor_associations (private)
-    define_method("add_#{association_singular}_associations") do |through_class, association_id, associations|
-      myself = self.class.to_s.foreign_key
-      my_buddy = association_singular.foreign_key
-      associations.each do |association|
-        my_buddy_id = Fixnum.eql?(association.class) ? association : association.id
-        new_association = through_class.new(myself => self.id, my_buddy => my_buddy_id)
+    define_method("add_#{association_singular}_associations") do |through_class, association_id, target_association_ids|
+      targets_to_add = target_association_class.find(target_association_ids)
+      targets_to_add.each do |target_association|
+        new_association = through_class.new(my_foreign_key => self.id, target_association_foreign_key => target_association.id)
         new_association.save
       end
     end
 
     private "remove_#{association_singular}_associations".to_sym, "add_#{association_singular}_associations".to_sym
 
+  end
+
+  def associations_to_association_ids(associations)
+    ids = []
+    if associations && !associations.empty?
+      associations.reject!{|a| a.to_s.empty? }
+      association_class = associations.first.class.to_s
+      ids = case association_class
+            when "String"
+              associations
+            when "Fixnum"
+              associations.map{|a| a.to_i }
+            else
+              associations.map{|a| a.id}
+      end
+    end
+    ids
   end
 
   private :collection_accessor_methods_elsewhere
