@@ -113,9 +113,9 @@ module StElsewhere
       association_class = associations.first.class.to_s
       ids = case association_class
             when "String"
-              associations
-            when "Fixnum"
               associations.map{|a| a.to_i }
+            when "Fixnum"
+              associations
             else
               associations.map{|a| a.id}
       end
