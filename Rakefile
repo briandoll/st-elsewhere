@@ -10,8 +10,7 @@ begin
     gem.email = "brian@emphaticsolutions.com"
     gem.homepage = "http://github.com/briandoll/st-elsewhere"
     gem.authors = ["Brian Doll"]
-    # gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.add_development_dependency "rr", ">= 0"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
@@ -21,7 +20,7 @@ end
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
+  test.pattern = 'test/*test.rb'
   test.verbose = true
 end
 

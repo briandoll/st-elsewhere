@@ -5,8 +5,6 @@ module StElsewhere
   #
   # The following methods for retrieval and query of collections of associated objects will be added:
   #
-  # [collection<<(object, ...)]
-  #   TODO: Adds one or more objects to the collection by setting their foreign keys to the collection's primary key.
   # [collection=objects]
   #   Replaces the collections content by deleting and adding objects as appropriate.
   # [collection_singular_ids]

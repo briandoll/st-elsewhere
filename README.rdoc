@@ -10,11 +10,11 @@ For a variety of reasons, you might find yourself supporting multiple databases 
 
 === The Problem
 
-While there may be great benefits to connecting to multiple databases in your app, there are also costs.  One example is that <b><tt>has_many :children, :through => parent_children</tt></b> does not work.
+While there may be great benefits to connecting to multiple databases in your app, there are also costs.  One example is that <b><tt>has_many :children, :through => parent_children</tt></b> may not work.
 
-You'll encounter one of two errors, depending on your setup:
-* If the schemas are different, you'll see something like: <tt>ActiveRecord::StatementInvalid: Mysql::Error: Table 'appname_transactional.parent_children' doesn't exist</tt>
-* If the schemas are the same but data only exists in one schema or the other, you'll just get empty relationships.
+If your database connections are available on the same host {you can prefix your ActiveRecord table names with the database name}[http://gist.github.com/239853].
+
+If your database connections are on two different hosts, no JOINs can save you and you'll need to implement your relationships in code.
 
 === The Solution
 
@@ -52,4 +52,13 @@ http://emphaticsolutions.com/images/has_many_elsewhere.png
 <tt>has_many_elsewhere</tt> is certainly much less efficient than a comparable has_many relationship.  <tt>has_many :through</tt> relationships use SQL JOINs which while efficient, do not work across multiple database connections.  St. Elsewhere implements much of the same resulting API methods in code, using less efficient SQL.
 
 === Install from gemcutter
+
   gem install st-elsewhere
+
+=== Roadmap
+
+Currently st-elsewhere is implemented as a basic ruby module that implements some of the basic functionality of has_many :through relationships in ActiveRecord.  A much more robust implementation would be to create an ActiveRecord association proxy, like HasManyThroughAssociation, that emulates the same API and could be integrated into the standard has_many class method.  I will likely be waiting for Rails 3 to be released (and thus the new base ORM implementation) before attempting the association proxy route.
+
+=== Thanks
+
+Thanks to {James Reynolds}[http://drtoast.com/] for the great name and  thanks to {Tanner Donovan}[http://github.com/ttdonovan] for patches and being the first production customer.

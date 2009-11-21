@@ -1,0 +1,9 @@
+0.1.5 "Ed Flanders"
+ - This is the first acceptable production release of st-elsewhere.
+ - Implements:
+   - has_many_elsewhere :association, :through => :through_association
+ - Provides:
+   - ARKlass#associations
+   - ARKlass#association_ids
+   - ARKlass#associations=
+   - ARKlass#association_ids=
